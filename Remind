@@ -1,0 +1,24 @@
+
+<!-- {this.state.loading && <Spinner/>} -->
+
+<!-- {!this.state.loading && this.state.articles.map((element)=>{
+                return <div className="col-md-4" key={element.url}>
+                    <NewsItem Source = {element.source.name} title = {element.title} description = {element.description?element.description.slice(0, 98):""} author={element.author} date={element.publishedAt} imageUrl= {element.urlToImage?element.urlToImage:"https://a4.espncdn.com/combiner/i?img=%2Fi%2Fcricket%2Fcricinfo%2F1219926_1296x729.jpg"} newsUrl={element.url}/>
+                </div>
+            })} -->
+
+
+
+            fetchMoreData = async() =>{
+                this.setState({page: this.state.page +1})
+                let url=`https://newsapi.org/v2/top-headlines?country=in&category=${this.props.category}&apiKey=1785c796245c40a493d10c14fa4d5c72&page=1&pageSize=${this.props.pageSize}`;
+                this.setState({loading:true})
+                let data = await fetch(url);
+                let parsedData = await data.json()
+                console.log(parsedData)
+                this.setState({articles: this.articles.concat(parsedData.articles), 
+                    totalResults: parsedData.totalResults,
+                    loading: false
+                })
+            }
+            }
